@@ -13,6 +13,17 @@ Meta Rift is a web application using [Riot Game's APIs](https://developer.riotga
 ### Flow Charts
 [API-Requests][api-request-flow]
 
+### Technologies
+* Python 2.7.11
+* JavaScript
+* Redux
+* ES6
+* AWS
+* Sass
+* Postgres
+* SQLAlchemy
+* Falcon
+
 ### Schematics
 
 ### Contributing
