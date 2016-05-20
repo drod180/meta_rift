@@ -4,7 +4,9 @@ Meta Rift is a web application using [Riot Game's APIs](https://developer.riotga
 
 ### Wireframes
 [landing-page][landing-page-image]
+
 [champion-page][single-champ-image]
+
 [index-page][index-view-image]
 
 
@@ -19,4 +21,4 @@ Want to file a bug, contribute code, or improve documentation? Check out our gui
 [landing-page-image]: ./docs/images/Meta_Rift_Landing_Page.png
 [single-champ-image]: ./docs/images/Meta_Rift_Single_Champion.png
 [index-view-image]: ./docs/images/Meta_Rift_Index_View.png
-[api-request-flow]: ./docs/flow_charts/API_Request_Flow.xml
+[api-request-flow]: ./docs/images/API_Request_Flow.jpg
