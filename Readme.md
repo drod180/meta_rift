@@ -21,4 +21,4 @@ Want to file a bug, contribute code, or improve documentation? Check out our gui
 [landing-page-image]: ./docs/images/Meta_Rift_Landing_Page.png
 [single-champ-image]: ./docs/images/Meta_Rift_Single_Champion.png
 [index-view-image]: ./docs/images/Meta_Rift_Index_View.png
-[api-request-flow]: ./docs/images/API_Request_Flow.jpg
+[api-request-flow]: ./docs/images/API_Request_Flow.png
