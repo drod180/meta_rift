@@ -1,18 +1,19 @@
-
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, browserHistory } from 'react-router';
+// import { Router, browserHistory } from 'react-router';
+// import routes from './src/routes';
+import { createStore } from 'redux';
+import reducers from './src/reducers';
 
-import { configureStore } from './src/store';
-import routes from './src/routes';
+import App from './src/containers/app';
+let store = createStore(reducers);
 
-let state = window.__initialState__ || undefined;
-const store = configureStore(browserHistory, state);
-
-render(
-  <Provider store={store}>
-    <Router routes={routes} />
-  </Provider>,
-  document.getElementById('root')
-);
+document.addEventListener('DOMContentLoaded', () => {
+	render(
+	  <Provider store={store}>
+	    <App />
+	  </Provider>,
+	  document.getElementById('root')
+	);
+});

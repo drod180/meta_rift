@@ -4,7 +4,7 @@ module.exports = {
   context: __dirname,
   entry: "./frontend/rift.jsx",
   output: {
-    path: path.join(__dirname, 'app', 'assets', 'javascripts'),
+    path: path.join(__dirname, "public", "javascript"),
     filename: "bundle.js"
   },
   resolve: {
@@ -12,13 +12,21 @@ module.exports = {
   },
   devtool: 'source-map',
   module: {
+		preloader: [
+			{
+				test: /\.js|\.jsx$/,
+				loader: 'eslint-loader',
+				include: path.join(__dirname, 'src'),
+				exclude: /bundle\.js%|webpack\.config\.js$/,
+			}
+		]
     loaders: [
       {
-        test: /\.jsx?$/,
-        exclude: /(node_modules|bower_components)/,
+        test: /\.js|\.jsx$/,
+        exclude: /node_modules/,
         loader: 'babel',
         query: {
-          presets: ['react']
+          presets: ['es2015', 'react']
         }
       },
       {
