@@ -1,4 +1,3 @@
-let nextTodoId = 0
 export const addChamps = () => {
   return {
     type: 'SHOW_TOP_CHAMPIONS',
