@@ -21958,9 +21958,13 @@
 	
 	var _reactRedux = __webpack_require__(168);
 	
-	var _champ = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../components/champ\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _champ = __webpack_require__(193);
 	
 	var _champ2 = _interopRequireDefault(_champ);
+	
+	var _details = __webpack_require__(194);
+	
+	var _details2 = _interopRequireDefault(_details);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21968,7 +21972,8 @@
 	  return _react2.default.createElement(
 	    'div',
 	    null,
-	    _react2.default.createElement(_champ2.default, null)
+	    _react2.default.createElement(_champ2.default, null),
+	    _react2.default.createElement(_details2.default, null)
 	  );
 	};
 
@@ -21995,6 +22000,73 @@
 	});
 	
 	exports.default = rootReducer;
+
+/***/ },
+/* 193 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Champ = function Champ(_ref) {
+		var onClick = _ref.onClick;
+		var imgURI = _ref.imgURI;
+		var thumb = _ref.thumb;
+		return _react2.default.createElement(
+			"div",
+			{ onClick: onClick, className: thumb ? "thumb" : "full" },
+			_react2.default.createElement("img", { src: imgURI })
+		);
+	};
+	
+	exports.default = Champ;
+
+/***/ },
+/* 194 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Details = function Details(_ref) {
+		var onClick = _ref.onClick;
+		var score = _ref.score;
+		var name = _ref.name;
+		return _react2.default.createElement(
+			'div',
+			null,
+			_react2.default.createElement(
+				'p',
+				null,
+				name
+			),
+			_react2.default.createElement(
+				'p',
+				null,
+				score
+			)
+		);
+	};
+	
+	exports.default = Details;
 
 /***/ }
 /******/ ]);
