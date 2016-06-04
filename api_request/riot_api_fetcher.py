@@ -8,7 +8,7 @@ class MatchFetcher:
 
 
     RANKED_PARAM = "?rankedQueues=TEAM_BUILDER_DRAFT_RANKED_5x5&beginTime="
-    API_KEY = "api_key=1f9059c3-0be7-4e6e-81d8-67757d145a40"
+    API_KEY = "" #Put your API key here
 
     # These are all of the LoL regions. Deleting from this list and the corresponding
     # SUMMONERS_BY_REGION dictionary will reduce the number of servers being queried.
