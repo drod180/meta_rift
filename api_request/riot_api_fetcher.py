@@ -8,7 +8,6 @@ class MatchFetcher:
 
 
     RANKED_PARAM = "?rankedQueues=TEAM_BUILDER_DRAFT_RANKED_5x5&beginTime="
-    API_KEY = "" #Put your API key here
 
     # These are all of the LoL regions. Deleting from this list and the corresponding
     # SUMMONERS_BY_REGION dictionary will reduce the number of servers being queried.
@@ -29,8 +28,9 @@ class MatchFetcher:
 
 
 
-    def __init__(self):
+    def __init__(self, api_key):
         self.total_matches = {}
+        self.api_key = "api_key=" + api_key
 
     def fetch_matches(self, query_distance, match_number_per_region):
         total_query_distance = int((time.time() * 1000) - query_distance)
@@ -39,7 +39,7 @@ class MatchFetcher:
 
         regions = MatchFetcher.REGIONS.keys()
         for region in regions:
-            threads.append(RequestThread(region, region, self.SUMMONERS_BY_REGION[region], total_query_distance, match_number_per_region))
+            threads.append(RequestThread(region, region, self.SUMMONERS_BY_REGION[region], total_query_distance, match_number_per_region, self.api_key))
             self.total_matches[region] = {}
         for thread in threads:
             thread.start()
@@ -51,11 +51,11 @@ class MatchFetcher:
         return self.total_matches
 
 
-exitFlag = 0
 
 class RequestThread(threading.Thread):
-    def __init__(self, region, threadName, starting_summoner, query_distance, matches_requested):
+    def __init__(self, region, threadName, starting_summoner, query_distance, matches_requested, api_key):
         threading.Thread.__init__(self)
+        self.api_key = api_key
         self.region = region
         self.name = threadName
         self.request_tracker = deque([])
@@ -106,10 +106,11 @@ class RequestThread(threading.Thread):
     def extract_match_data(self, match_id, summoner_queue):
         regional_url = self.build_regional_url("Match")
         self.track_request()
-        match_data = requests.get(("{0}" + "{1}" + "?" + "{2}").format(regional_url, match_id, MatchFetcher.API_KEY))
+        match_data = requests.get(("{0}" + "{1}" + "?" + "{2}").format(regional_url, match_id, self.api_key))
         print match_data.status_code
         if match_data.status_code == 200:
             match_details = json.loads(match_data.text)
+            self.lockout_counter = 0
             self.total_matches[match_id] = match_details
             for summoner in match_details["participantIdentities"]:
                 summoner_queue.append(summoner["player"]["summonerId"])
@@ -121,6 +122,12 @@ class RequestThread(threading.Thread):
             if self.check_for_lockout(match_data) == False:
                 return True
 
+        elif match_data.status_code == 403 or match_data.status_code == 404:
+            return True #Break if forbidden. This could be blacklisting or an api key error. Also break on bad input
+
+        elif match_data.status_code == 500 or match_data.status_code == 503:
+            return extract_match_data(match_id, summoner_queue)
+
         return False
 
     def fetch_matches(self, summoner_id = "none"):
@@ -128,18 +135,23 @@ class RequestThread(threading.Thread):
             summoner_id = self.starting_summoner
 
             regional_url = self.build_regional_url("Matchlist")
-            request_url = ("{0}" + "{1}" + "{2}" + "{3}" + "&" + "{4}").format(regional_url, summoner_id, MatchFetcher.RANKED_PARAM, self.query_distance, MatchFetcher.API_KEY)
+            request_url = ("{0}" + "{1}" + "{2}" + "{3}" + "&" + "{4}").format(regional_url, summoner_id, MatchFetcher.RANKED_PARAM, self.query_distance, self.api_key)
             self.track_request()
             matches = requests.get(request_url)
             print matches.status_code
             if matches.status_code == 200:
+                self.lockout_counter = 0
                 self.summoners[summoner_id] = True
                 return json.loads(matches.text)["matches"]
 
             elif matches.status_code == 429: #break if getting rate limited. Don't want to get blacklisted!
                 if self.check_for_lockout(matches) == False:
                     return False
-                else: self.fetch_matches(summoner_id)
+
+            elif matches.status_code == 403 or matches.status_code == 404:
+                return False
+
+
 
     def check_for_lockout(self, response):
         print response.headers
@@ -156,14 +168,13 @@ class RequestThread(threading.Thread):
 
         return True
 
-
     def fetcher(self):
         finished = False
         match_queue = self.set_up_match_queue()
         summoner_queue = deque([])
+        if len(match_queue) == 0:
+            return
         while finished == False:
-            if exitFlag:
-                self.name.exit()
             self.halt_requests()
             if len(match_queue) > 0:
                 match_id = match_queue.popleft()
@@ -188,9 +199,11 @@ class RequestThread(threading.Thread):
         if initial_matches == False:
             return match_queue
         while initial_matches is None:
+            self.halt_requests()
             initial_matches = self.fetch_matches()
-        for match in initial_matches:
-            match_queue.append(match["matchId"])
+        if initial_matches is not None:
+            for match in initial_matches:
+                match_queue.append(match["matchId"])
 
         return match_queue
 
@@ -198,12 +211,12 @@ class RequestThread(threading.Thread):
 
 
 # For testing a single thread
-# a = RequestThread("NA", "NA", MatchFetcher.SUMMONERS_BY_REGION["NA"] )
+# a = RequestThread("NA", "NA", MatchFetcher.SUMMONERS_BY_REGION["NA"], 1464039831476, 10, API_KEY)
 # a.start()
 # a.join()
-
+#
 # For testing the fetcher class
-# a = MatchFetcher()
+# a = MatchFetcher(API_KEY)
 # results = a.fetch_matches(1209600000, 10) # two weeks ago in milliseconds, finding 10 matches per region
 # for region in results.keys():
 #     print ("Matches for {0}:").format(region)
