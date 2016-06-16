@@ -9,11 +9,12 @@ class Champion(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     role = Column(String)
+    win_rate = Column(Float)
     pick_rate = Column(Float)
     ban_rate = Column(Float)
     image_url = Column(String)
 
     def __repr__(self):
-        return "<Champion(name='%s', role='%s')>" % (
-            self.name, self.role
+        return "<Champion(name='%s', role='%s', win%='%s')>" % (
+            self.name, self.role, self.win_rate
         )
