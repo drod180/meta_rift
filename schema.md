@@ -23,10 +23,9 @@ name             | string    | not null
 pick/ban rate    | integer   |
 win rate         | integer   |
 metascore        | integer   |
-top              | integer   | not null
-mid              | integer   | not null
-jungle           | integer   | not null
-marksman         | integer   | not null
-support          | integer   | not null
-
+role             | string    | must be between 00000 and 11111
 image            | img       | not null
+
+NB: `role` above is a binary string with digits ordered by top-mid-jungle-marksman-support,
+where the digit is 1 if the champion has had a certain minimum percentage of matches
+played in the role and 0 otherwise.
