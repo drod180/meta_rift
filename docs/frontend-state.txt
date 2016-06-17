@@ -1,0 +1,5 @@
+mainChampId // int - id of champion to be displayed
+topChampIds // Array of ints - ids of champions to be displayed as top 3
+counterChampIds // Array of ints - ids of champions who main champ counters
+counteredChampIds // Array of ints - ids of champions who counters
+allChamps // Array of ints - id of all champions

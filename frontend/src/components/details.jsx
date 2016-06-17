@@ -1,10 +1,18 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes } from 'react';
 
 const Details = ({ onClick, score, name }) => (
-	<div>
-		<p>{name}</p>
-		<p>{score}</p>
-	</div>
-)
+  <div
+    onClick={onClick}
+  >
+    <p>{name}</p>
+    <p>{score}</p>
+  </div>
+);
 
-export default Details
+Details.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  score: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+};
+
+export default Details;

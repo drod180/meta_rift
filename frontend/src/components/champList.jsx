@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import Champ from './champ';
 
 const ChampList = ({ champs, onChampClick }) => (
-	<ul>
+  <ul>
     {champs.map(champ =>
       <Champ
         key={champ.id}
@@ -11,6 +11,11 @@ const ChampList = ({ champs, onChampClick }) => (
       />
     )}
   </ul>
-)
+);
+
+ChampList.propTypes = {
+  champs: PropTypes.number.isRequired,
+  onChampClick: PropTypes.func.isRequired,
+};
 
 export default ChampList;

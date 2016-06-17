@@ -1,48 +1,48 @@
 import React from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import Champ from '../components/champ';
 import Details from '../components/details';
 
 export default function App() {
   return (
     <div>
-			<section className="top-champ">
-	      <Champ />
-				<Details />
-			</section>
+      <section className="main-champ">
+        <Champ />
+        <Details />
+      </section>
 
-			<section className="top-champs">
-	      <Champ />
-				<Details />
+      <section className="top-champs">
+        <Champ />
+        <Details />
 
-				<Champ />
-				<Details />
+        <Champ />
+        <Details />
 
-				<Champ />
-				<Details />
-			</section>
+        <Champ />
+        <Details />
+      </section>
 
-			<section className="weak-champs">
-	      <Champ />
-				<Details />
+      <section className="counter-champs">
+        <Champ />
+        <Details />
 
-				<Champ />
-				<Details />
+        <Champ />
+        <Details />
 
-				<Champ />
-				<Details />
-			</section>
+        <Champ />
+        <Details />
+      </section>
 
-			<section className="strong-champs">
-	      <Champ />
-				<Details />
+      <section className="countered-champs">
+        <Champ />
+        <Details />
 
-				<Champ />
-				<Details />
+        <Champ />
+        <Details />
 
-				<Champ />
-				<Details />
-			</section>
+        <Champ />
+        <Details />
+      </section>
     </div>
   );
-};
+}
