@@ -16,57 +16,77 @@ Base = champion_model.Base
 
 engine = create_engine("postgresql://metarifttester:password@localhost/metarifttest")
 
+Base.metadata.drop_all(engine)
+
 Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine)
 
 test_session = Session()
 
+def create_champ_with_name(str):
+    fake_champion = Champion(name=str, role="11011")
+    return fake_champion
+
+ali = create_champ_with_name("Muhammad Ali")
+test_session.add(ali)
+test_session.commit()
+
 class ModelTestMethods(unittest.TestCase):
 
     def test_createchampion(self):
-        fake_champion = Champion(name="Fake", role="11011")
+        fake_champion = create_champ_with_name("Fake")
         test_session.add(fake_champion)
         test_champion = test_session.query(Champion).filter_by(name="Fake").first()
         self.assertTrue(fake_champion is test_champion)
 
     def test_updatewinrate(self):
-        test_champion = test_session.query(Champion).filter_by(name="Fake").first()
-        self.assertTrue(test_champion.win_rate == None)
-        test_champion.win_rate = .65
-        test_champion2 = test_session.query(Champion).filter_by(name="Fake").first()
-        self.assertTrue(test_champion2.win_rate == .65)
+        ali = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
+        ali.win_rate = .65
+        new_ali = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
+        self.assertTrue(new_ali.win_rate == .65)
 
     def test_updatepickrate(self):
-        test_champion = test_session.query(Champion).filter_by(name="Fake").first()
-        self.assertTrue(test_champion.pick_rate == None)
-        test_champion.pick_rate = .42
-        test_champion2 = test_session.query(Champion).filter_by(name="Fake").first()
-        self.assertTrue(test_champion2.pick_rate == .42)
+        ali = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
+        ali.pick_rate = .42
+        ali2 = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
+        self.assertTrue(ali2.pick_rate == .42)
 
     def test_updatebanrate(self):
-        test_champion = test_session.query(Champion).filter_by(name="Fake").first()
-        self.assertTrue(test_champion.ban_rate == None)
-        test_champion.ban_rate = .20
-        test_champion2 = test_session.query(Champion).filter_by(name="Fake").first()
-        self.assertTrue(test_champion2.ban_rate == .20)
+        ali = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
+        ali.ban_rate = .20
+        ali2 = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
+        self.assertTrue(ali.ban_rate == .20)
 
     def test_updaterole(self):
-        test_champion = test_session.query(Champion).filter_by(name="Fake").first()
-        self.assertTrue(test_champion.role == "11011")
-        test_champion.role = "11111"
-        test_champion2 = test_session.query(Champion).filter_by(name="Fake").first()
-        self.assertTrue(test_champion2.role == "11111")
+        ali = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
+        ali.role = "11111"
+        ali2 = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
+        self.assertTrue(ali2.role == "11111")
 
     def test_updateimageurl(self):
-        test_champion = test_session.query(Champion).filter_by(name="Fake").first()
-        self.assertTrue(test_champion.image_url == None)
-        test_champion.image_url = "http://www.someimage.com/38429.jpg"
-        test_champion2 = test_session.query(Champion).filter_by(name="Fake").first()
-        self.assertTrue(test_champion2.image_url == "http://www.someimage.com/38429.jpg")
+        ali = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
+        ali.image_url = "http://www.someimage.com/38429.jpg"
+        ali2 = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
+        self.assertTrue(ali2.image_url == "http://www.someimage.com/38429.jpg")
 
+    def test_winrate_validation(self):
+        ali = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
+        ali.win_rate = 1.01
+        with self.assertRaises(AssertionError):
+            test_session.commit()
 
+    def test_pickrate_validation(self):
+        ali = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
+        ali.pick_rate = 1.01
+        with self.assertRaises(AssertionError):
+            test_session.commit()
 
+    def test_banrate_validation(self):
+        ali = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
+        ali.ban_rate = 1.01
+        with self.assertRaises(AssertionError):
+            test_session.commit()
 
 if __name__ == '__main__':
     unittest.main()
