@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import imp
 
-champion_model = imp.load_source('champion', '../models/champion.py')
+champion_model = imp.load_source('champion', 'src/models/champion.py')
 Champion = champion_model.Champion
 Base = champion_model.Base
 
@@ -20,7 +20,7 @@ class ChampionShow():
         if hero == None:
             resp.body = "No such hero found"
         else:
-            hero_object = {'id': hero.id, 
+            hero_object = {'id': hero.id,
                            'name': hero.name,
                            'role': hero.role,
                            'win_rate': hero.win_rate,
