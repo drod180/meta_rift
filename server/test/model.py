@@ -72,21 +72,18 @@ class ModelTestMethods(unittest.TestCase):
 
     def test_winrate_validation(self):
         ali = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
-        ali.win_rate = 1.01
         with self.assertRaises(AssertionError):
-            test_session.commit()
+            ali.win_rate = 1.01
 
     def test_pickrate_validation(self):
         ali = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
-        ali.pick_rate = 1.01
         with self.assertRaises(AssertionError):
-            test_session.commit()
+            ali.pick_rate = 1.01
 
     def test_banrate_validation(self):
         ali = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
-        ali.ban_rate = 1.01
         with self.assertRaises(AssertionError):
-            test_session.commit()
+            ali.ban_rate = 1.01
 
 if __name__ == '__main__':
     unittest.main()
