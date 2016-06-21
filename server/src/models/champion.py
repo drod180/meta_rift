@@ -7,7 +7,7 @@ class Champion(Base):
     __tablename__= 'champions'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String)
+    name = Column(String, unique=True, nullable=False)
     role = Column(String)
     win_rate = Column(Float)
     pick_rate = Column(Float)

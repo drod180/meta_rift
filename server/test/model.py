@@ -20,17 +20,27 @@ Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine)
 
+test_session = Session()
+
 class ModelTestMethods(unittest.TestCase):
 
     def test_createchampion(self):
-        test_session = Session()
         fake_champion = Champion(name="Fake", role="11011")
         test_session.add(fake_champion)
         test_champion = test_session.query(Champion).filter_by(name="Fake").first()
         self.assertTrue(fake_champion is test_champion)
+
+    def test_updatewinrate(self):
+        test_champion = test_session.query(Champion).filter_by(name="Fake").first()
+        self.assertTrue(test_champion.win_rate == None)
+        test_champion.win_rate = .65
+        test_champion2 = test_session.query(Champion).filter_by(name="Fake").first()
+        self.assertTrue(test_champion2.win_rate == .65)
+
 
 
 
 
 if __name__ == '__main__':
     unittest.main()
+    Base.metadata.drop_all(engine)
