@@ -16,16 +16,34 @@ class ChampionShow():
 
     def on_get(self, req, resp, name):
         show_session = Session()
-        hero = show_session.query(Champion).filter(Champion.name == name).one_or_none()
-        if hero == None:
-            resp.body = "No such hero found"
+        champion = show_session.query(Champion).filter(Champion.name == name).one_or_none()
+        if champion == None:
+            resp.body = "No such champion found"
         else:
-            hero_object = {'id': hero.id,
-                           'name': hero.name,
-                           'role': hero.role,
-                           'win_rate': hero.win_rate,
-                           'ban_rate': hero.ban_rate,
-                           'pick_rate': hero.pick_rate,
-                           'image': hero.image_url
+            champion_object = {'id': champion.id,
+                           'name': champion.name,
+                           'role': champion.role,
+                           'win_rate': champion.win_rate,
+                           'ban_rate': champion.ban_rate,
+                           'pick_rate': champion.pick_rate,
+                           'image': champion.image_url
                            }
-            resp.data = json.dumps(hero_object)
+            resp.data = json.dumps(champion_object)
+
+class ChampionIndex():
+
+    def on_get(self, req, resp):
+        index_session = Session()
+        champions_object = {}
+        for champion in index_session.query(Champion).all():
+            champion_object = {'id': champion.id,
+                               'name': champion.name,
+                               'role': champion.role,
+                               'win_rate': champion.win_rate,
+                               'ban_rate': champion.ban_rate,
+                               'pick_rate': champion.pick_rate,
+                               'image': champion.image_url
+                               }
+            champions_object[champion.id] = champion_object
+
+        resp.data = json.dumps(champions_object)

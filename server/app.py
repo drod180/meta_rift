@@ -9,9 +9,9 @@ api = application = falcon.API()
 
 champion_cont = imp.load_source('champions', 'src/controllers/champions.py')
 
-# champions_index = champion_cont.ChampionIndex()
+champions_index = champion_cont.ChampionIndex()
 
 champion_show = champion_cont.ChampionShow()
 
-# api.add_route('/heroes', heroes_index)
+api.add_route('/champions', champions_index)
 api.add_route('/champions/{name}', champion_show)
