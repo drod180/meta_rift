@@ -37,6 +37,33 @@ class ModelTestMethods(unittest.TestCase):
         test_champion2 = test_session.query(Champion).filter_by(name="Fake").first()
         self.assertTrue(test_champion2.win_rate == .65)
 
+    def test_updatepickrate(self):
+        test_champion = test_session.query(Champion).filter_by(name="Fake").first()
+        self.assertTrue(test_champion.pick_rate == None)
+        test_champion.pick_rate = .42
+        test_champion2 = test_session.query(Champion).filter_by(name="Fake").first()
+        self.assertTrue(test_champion2.pick_rate == .42)
+
+    def test_updatebanrate(self):
+        test_champion = test_session.query(Champion).filter_by(name="Fake").first()
+        self.assertTrue(test_champion.ban_rate == None)
+        test_champion.ban_rate = .20
+        test_champion2 = test_session.query(Champion).filter_by(name="Fake").first()
+        self.assertTrue(test_champion2.ban_rate == .20)
+
+    def test_updaterole(self):
+        test_champion = test_session.query(Champion).filter_by(name="Fake").first()
+        self.assertTrue(test_champion.role == "11011")
+        test_champion.role = "11111"
+        test_champion2 = test_session.query(Champion).filter_by(name="Fake").first()
+        self.assertTrue(test_champion2.role == "11111")
+
+    def test_updateimageurl(self):
+        test_champion = test_session.query(Champion).filter_by(name="Fake").first()
+        self.assertTrue(test_champion.image_url == None)
+        test_champion.image_url = "http://www.someimage.com/38429.jpg"
+        test_champion2 = test_session.query(Champion).filter_by(name="Fake").first()
+        self.assertTrue(test_champion2.image_url == "http://www.someimage.com/38429.jpg")
 
 
 
