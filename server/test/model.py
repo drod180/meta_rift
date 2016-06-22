@@ -25,7 +25,7 @@ Session = sessionmaker(bind=engine)
 test_session = Session()
 
 def create_champ_with_name(str):
-    fake_champion = Champion(name=str, role="11011")
+    fake_champion = Champion(name=str)
     return fake_champion
 
 ali = create_champ_with_name("Muhammad Ali")
@@ -39,6 +39,7 @@ class ModelTestMethods(unittest.TestCase):
         test_session.add(fake_champion)
         test_champion = test_session.query(Champion).filter_by(name="Fake").first()
         self.assertTrue(fake_champion is test_champion)
+        self.assertTrue(test_champion.role == 0)
 
     def test_updatewinrate(self):
         ali = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
@@ -60,9 +61,9 @@ class ModelTestMethods(unittest.TestCase):
 
     def test_updaterole(self):
         ali = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
-        ali.role = "11111"
+        ali.role = 31
         ali2 = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
-        self.assertTrue(ali2.role == "11111")
+        self.assertTrue(ali2.role == 31)
 
     def test_updateimageurl(self):
         ali = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
@@ -84,6 +85,14 @@ class ModelTestMethods(unittest.TestCase):
         ali = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
         with self.assertRaises(AssertionError):
             ali.ban_rate = 1.01
+
+    def test_rolevalidation(self):
+        ali = test_session.query(Champion).filter_by(name="Muhammad Ali").first()
+        with self.assertRaises(AssertionError):
+            ali.role = 42
+        with self.assertRaises(AssertionError):
+            ali.role = -1
+
 
 if __name__ == '__main__':
     unittest.main()

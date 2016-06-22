@@ -12,7 +12,7 @@ class Champion(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True, nullable=False)
-    role = Column(String)
+    role = Column(Integer, default=0)
     win_rate = Column(Float)
     pick_rate = Column(Float)
     ban_rate = Column(Float)
@@ -31,6 +31,11 @@ class Champion(Base):
     @validates('ban_rate')
     def validate_ban_rate(self, key, value):
         assert rate_check(value)
+        return value
+
+    @validates('role')
+    def validates_role(self, key, value):
+        assert value >= 0 and value <= 31
         return value
 
     def __repr__(self):
