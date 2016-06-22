@@ -39,6 +39,6 @@ class Champion(Base):
         return value
 
     def __repr__(self):
-        return "<Champion(name='%s', role='%s', win%='%s')>" % (
-            self.name, self.role, self.win_rate
-        )
+        return "<Champion(name='%s', role='%s', win%='%s')>" % (self.name,
+                                                                self.role,
+                                                                self.win_rate)

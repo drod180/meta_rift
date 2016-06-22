@@ -11,7 +11,9 @@ Base = champion_model.Base
 # replace "metarift:leagueofpidgeons" with "<username>:<password>" of a user with
 # access to metariftdevelopment in the line below
 
-engine = create_engine("postgresql://metarift:leagueofpidgeons@localhost/metariftdevelopment")
+psql_url = "postgresql://metarift:leagueofpidgeons@localhost/metariftdevelopment"
+
+engine = create_engine(psql_url)
 
 Base.metadata.drop_all(engine)
 

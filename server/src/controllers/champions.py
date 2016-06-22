@@ -12,7 +12,9 @@ Base = champion_model.Base
 # replace "metarift:leagueofpidgeons" with "<username>:<password>" of a user with
 # access to metariftdevelopment in the line below
 
-engine = create_engine("postgresql://metarift:leagueofpidgeons@localhost/metariftdevelopment")
+psql_url = "postgresql://metarift:leagueofpidgeons@localhost/metariftdevelopment"
+
+engine = create_engine(psql_url)
 
 Session = sessionmaker(bind=engine)
 
@@ -25,13 +27,13 @@ class ChampionShow():
             resp.body = "No such champion found"
         else:
             champion_object = {'id': champion.id,
-                           'name': champion.name,
-                           'role': champion.role,
-                           'win_rate': champion.win_rate,
-                           'ban_rate': champion.ban_rate,
-                           'pick_rate': champion.pick_rate,
-                           'image': champion.image_url
-                           }
+                'name': champion.name,
+                'role': champion.role,
+                'win_rate': champion.win_rate,
+                'ban_rate': champion.ban_rate,
+                'pick_rate': champion.pick_rate,
+                'image': champion.image_url
+            }
             resp.data = json.dumps(champion_object)
 
 class ChampionIndex():
@@ -41,13 +43,13 @@ class ChampionIndex():
         champions_object = {}
         for champion in index_session.query(Champion).all():
             champion_object = {'id': champion.id,
-                               'name': champion.name,
-                               'role': champion.role,
-                               'win_rate': champion.win_rate,
-                               'ban_rate': champion.ban_rate,
-                               'pick_rate': champion.pick_rate,
-                               'image': champion.image_url
-                               }
+                'name': champion.name,
+                'role': champion.role,
+                'win_rate': champion.win_rate,
+                'ban_rate': champion.ban_rate,
+                'pick_rate': champion.pick_rate,
+                'image': champion.image_url
+            }
             champions_object[champion.id] = champion_object
 
         resp.data = json.dumps(champions_object)
