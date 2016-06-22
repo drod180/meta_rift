@@ -1,48 +1,61 @@
-import React from 'react';
+import React, { Component } from 'react';
 // import { connect } from 'react-redux';
 import Champ from '../components/champ';
 import Details from '../components/details';
+import Store
 
-export default function App() {
-  return (
-    <div>
-      <section className="main-champ">
-        <Champ />
-        <Details />
-      </section>
+export default class Main extends Component {
+  componentDidMount() {
+    this.unsubscribe = store.subscribe(() =>
+      this.forceUpdate()
+    );
+  }
 
-      <section className="top-champs">
-        <Champ />
-        <Details />
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
 
-        <Champ />
-        <Details />
+  render() {
+    return (
+      <div>
+        <section className="main-champ">
+          <Champ />
+          <Details />
+        </section>
 
-        <Champ />
-        <Details />
-      </section>
+        <section className="top-champs">
+          <Champ />
+          <Details />
 
-      <section className="counter-champs">
-        <Champ />
-        <Details />
+          <Champ />
+          <Details />
 
-        <Champ />
-        <Details />
+          <Champ />
+          <Details />
+        </section>
 
-        <Champ />
-        <Details />
-      </section>
+        <section className="counter-champs">
+          <Champ />
+          <Details />
 
-      <section className="countered-champs">
-        <Champ />
-        <Details />
+          <Champ />
+          <Details />
 
-        <Champ />
-        <Details />
+          <Champ />
+          <Details />
+        </section>
 
-        <Champ />
-        <Details />
-      </section>
-    </div>
-  );
+        <section className="countered-champs">
+          <Champ />
+          <Details />
+
+          <Champ />
+          <Details />
+
+          <Champ />
+          <Details />
+        </section>
+      </div>
+    );
+  }
 }
