@@ -9,7 +9,7 @@ Base = champion_model.Base
 
 # To use this locally, create a database called metariftdevelopment and
 # replace "metarift:leagueofpidgeons" with "<username>:<password>" of a user with
-# access to metariftdevelopment
+# access to metariftdevelopment in the line below
 
 engine = create_engine("postgresql://metarift:leagueofpidgeons@localhost/metariftdevelopment")
 

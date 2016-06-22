@@ -8,6 +8,10 @@ champion_model = imp.load_source('champion', 'src/models/champion.py')
 Champion = champion_model.Champion
 Base = champion_model.Base
 
+# To use this locally, create a database called metariftdevelopment and
+# replace "metarift:leagueofpidgeons" with "<username>:<password>" of a user with
+# access to metariftdevelopment in the line below
+
 engine = create_engine("postgresql://metarift:leagueofpidgeons@localhost/metariftdevelopment")
 
 Session = sessionmaker(bind=engine)

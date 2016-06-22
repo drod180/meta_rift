@@ -1,2 +1,6 @@
 .DS_Store
 api_request/riot_api_fetcher.pyc
+controllers/champions.pyc
+models/champion.pyc
+test/model.pyc
+src/app.pyc
