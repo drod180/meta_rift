@@ -29,7 +29,7 @@ class MatchFetcher:
         "NA": deque(["19134540", "72749304", "51405", "65009177"]), \
         "OCE": deque(["346050", "293100", "432291", "484696"]), \
         "RU": deque(["4780139", "5420417", "312366", "483422"]), \
-        "TR": deque(["2130246", "2024938", "2592438", "1883115"])}
+        "TR": deque(["2411323", "2024938", "2592438", "1883115"])}
 
 
 
@@ -131,7 +131,8 @@ class RequestThread(threading.Thread):
             return True #Break if forbidden. This could be blacklisting or an api key error. Also break on bad input
 
         elif match_data.status_code == 500 or match_data.status_code == 503:
-            return extract_match_data(match_id, summoner_queue)
+            self.check_for_lockout(match_data)
+            return self.extract_match_data(match_id, summoner_queue)
 
         return False
 
@@ -155,15 +156,21 @@ class RequestThread(threading.Thread):
                 return False
 
         elif matches.status_code == 403 or matches.status_code == 404:
-            return False
+            if summoner_id == self.starting_summoners[0]:
+                return None
+            else:
+                return False
 
         elif matches.status_code == 500 or matches.status_code == 503:
+            self.halt_requests()
+            self.check_for_lockout(matches)
             return self.fetch_matches(summoner_id)
 
 
 
     def check_for_lockout(self, response):
-        print response.headers
+        if response.status_code == 429:
+            print response.headers['X-Rate-Limit-Count']
         if 'X-Rate-Limit-Type' in response.headers: # check to make sure it's the program exceeding the limit, not something internal
             print "Rate limit exceeded"
             return False
@@ -199,20 +206,26 @@ class RequestThread(threading.Thread):
                             finished = True
                         else:
                             for match in matches:
-                                if not match["matchId"] in self.total_matches:
+                                if not match["matchId"] in self.total_matches and match["region"] == self.region:
                                     match_queue.append(match["matchId"])
 
     def set_up_match_queue(self):
         match_queue = deque([])
-        initial_matches = self.fetch_matches()
-        if initial_matches == False:
-            return match_queue
+        initial_matches = None
+        counter = 0
         while initial_matches is None:
             self.halt_requests()
-            self.starting_summoners.append(self.starting_summoners.popleft)
             initial_matches = self.fetch_matches()
-        if initial_matches is not None:
-            for match in initial_matches:
+            if initial_matches == False:
+                return match_queue
+
+            self.starting_summoners.append(self.starting_summoners.popleft)
+            counter += 1
+            if counter == 4:
+                print "Tried all summoners"
+                return match_queue
+        for match in initial_matches:
+            if match["region"] == self.region: #This makes sure that if a player transfers, we don't append matches on the wrong servers.
                 match_queue.append(match["matchId"])
 
         return match_queue

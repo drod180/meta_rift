@@ -6,8 +6,8 @@ from riot_api_fetcher import *
 class TestRiotApi(unittest.TestCase):
 
     def setUp(self):
-        self.test_thread = RequestThread("NA", "NA", MatchFetcher.SUMMONERS_BY_REGION["NA"], int((time.time() * 1000) - 1209600000), 10, #API Key)
-        self.test_fetcher = MatchFetcher(#API Key)
+        self.test_thread = RequestThread("NA", "NA", MatchFetcher.SUMMONERS_BY_REGION["NA"], int((time.time() * 1000) - 1209600000), 10, #API_KEY)
+        self.test_fetcher = MatchFetcher(#API_KEY)
 
 class BasicApiTest(TestRiotApi):
     def test_thread_init_region(self):
@@ -17,7 +17,7 @@ class BasicApiTest(TestRiotApi):
         self.assertEqual(self.test_thread.name, "NA")
 
     def test_thread_init_starting_summoner(self):
-        self.assertEqual(self.test_thread.starting_summoner, MatchFetcher.SUMMONERS_BY_REGION["NA"])
+        self.assertEqual(self.test_thread.starting_summoners[0], MatchFetcher.SUMMONERS_BY_REGION["NA"][0])
 
     def test_thread_init_query_distance(self):
         self.assertEqual(self.test_thread.query_distance, int((time.time() * 1000) - 1209600000))
@@ -34,7 +34,7 @@ class BasicFetcherTest(TestRiotApi):
         self.assertEqual(len(results), 11)
 
     def test_fetcher_bad_input(self):
-        bad_thread = RequestThread("NA", "NA", MatchFetcher.SUMMONERS_BY_REGION["NA"] + "00", int((time.time() * 1000) - 1209600000), 1, #API Key)
+        bad_thread = RequestThread("NA", "NA", MatchFetcher.SUMMONERS_BY_REGION["NA"][0] + "00", int((time.time() * 1000) - 1209600000), 1, #API_KEY)
         bad_thread.start()
         bad_thread.join()
         results = bad_thread.total_matches
