@@ -3,6 +3,7 @@ import json
 import time
 import threading
 from collections import deque
+import os
 
 class MatchFetcher:
 
@@ -33,9 +34,10 @@ class MatchFetcher:
 
 
 
-    def __init__(self, api_key):
+    def __init__(self):
+
         self.total_matches = {}
-        self.api_key = "api_key=" + api_key
+        self.api_key = "api_key=" + os.environ'api_key'] #Be sure to set the API_Key as an environment variable before creating a MatchFetcher!
 
     def fetch_matches(self, query_distance, match_number_per_region):
         total_query_distance = int((time.time() * 1000) - query_distance)
@@ -239,7 +241,7 @@ class RequestThread(threading.Thread):
 # a.join()
 #
 # For testing the fetcher class
-# a = MatchFetcher(API_KEY)
+# a = MatchFetcher()
 # results = a.fetch_matches(1209600000, 10) # two weeks ago in milliseconds, finding 10 matches per region
 # for region in results.keys():
 #     print ("Matches for {0}:").format(region)

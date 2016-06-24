@@ -1,13 +1,16 @@
 import unittest
 import time
 from riot_api_fetcher import *
+import os
+
 
 #To run the tests, put your API Key in the places where they are commented out
 class TestRiotApi(unittest.TestCase):
+    ENV = os.environ
 
     def setUp(self):
-        self.test_thread = RequestThread("NA", "NA", MatchFetcher.SUMMONERS_BY_REGION["NA"], int((time.time() * 1000) - 1209600000), 10, #API_KEY)
-        self.test_fetcher = MatchFetcher(#API_KEY)
+        self.test_thread = RequestThread("NA", "NA", MatchFetcher.SUMMONERS_BY_REGION["NA"], int((time.time() * 1000) - 1209600000), 10, self.ENV['api_key'])
+        self.test_fetcher = MatchFetcher()
 
 class BasicApiTest(TestRiotApi):
     def test_thread_init_region(self):
@@ -26,6 +29,8 @@ class BasicApiTest(TestRiotApi):
         self.assertEqual(self.test_thread.matches_requested, 10)
 
 class BasicFetcherTest(TestRiotApi):
+    ENV = os.environ
+
     def test_fetcher_init(self):
         self.assertEqual(self.test_fetcher.total_matches, {})
 
@@ -34,7 +39,7 @@ class BasicFetcherTest(TestRiotApi):
         self.assertEqual(len(results), 11)
 
     def test_fetcher_bad_input(self):
-        bad_thread = RequestThread("NA", "NA", MatchFetcher.SUMMONERS_BY_REGION["NA"][0] + "00", int((time.time() * 1000) - 1209600000), 1, #API_KEY)
+        bad_thread = RequestThread("NA", "NA", MatchFetcher.SUMMONERS_BY_REGION["NA"][0] + "00", int((time.time() * 1000) - 1209600000), 1, self.ENV['api_key'])
         bad_thread.start()
         bad_thread.join()
         results = bad_thread.total_matches
