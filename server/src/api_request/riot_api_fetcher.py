@@ -37,7 +37,7 @@ class MatchFetcher:
     def __init__(self):
 
         self.total_matches = {}
-        self.api_key = "api_key=" + os.environ'api_key'] #Be sure to set the API_Key as an environment variable before creating a MatchFetcher!
+        self.api_key = "api_key=" + os.environ['api_key'] #Be sure to set the API_Key as an environment variable before creating a MatchFetcher!
 
     def fetch_matches(self, query_distance, match_number_per_region):
         total_query_distance = int((time.time() * 1000) - query_distance)
