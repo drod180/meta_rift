@@ -1,5 +1,7 @@
 import os
 
 keys = {
-    "riot": os.environ['meta_rift_riot_key']
+    "riot": os.environ['api_key'],
+    "dbuser": os.environ['metarift_user'],
+    "dbpwd": os.environ['metarift_pwd']
 }

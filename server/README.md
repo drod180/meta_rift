@@ -4,6 +4,10 @@
 
 Eventually, the backend will be entirely on AWS and will use environmental variables. In the meantime, the API can be set up and tested according to the following instructions.
 
+#### Step 0: Local Database
+
+Create a local Postgres database named 'metariftdevelopment'
+
 #### Step 1: Setting up environment variables
 
 The following environment variables are used:  
@@ -12,21 +16,26 @@ The following environment variables are used:
 Setting environment variables:  
 **Windows**  
 From the command line run as admin:  
-`setx api_key "[KEY]"`  
-replace [KEY] with your Riot API key.
+`setx api_key "[KEY]"`
+`setx metarift_user "[USERNAME]"`
+`setx metarift_pwd "[PASSWORD]"`
+
+Replace [KEY] with your Riot API key and replace [USERNAME] and [PASSWORD] with the credentials of a Postgres user with access to 'metariftdevelopment'.
 Be sure to restart Powershell after using setx, as it won't take effect in your current session.
 
 **Ubuntu**  
 From the command line run:  
-`export api_key=[KEY]`  
-replace [KEY] with your Riot API key.  
-This needs to be run on each restart/session, to keep it set add the above line in your profile, e.g. .bash_profile, .zshrc, .bashrc, etc.
+`export api_key=[KEY]`
+`export metarift_user=[USERNAME]`
+`export metarift_pwd=[PASSWORD]`
+
+Replace [KEY] with your Riot API key and replace [USERNAME] and [PASSWORD] with the credentials of a Postgres user with access to 'metariftdevelopment'.  
+This needs to be run on each restart/session, to keep it set add the above lines in your profile, e.g. .bash_profile, .zshrc, .bashrc, etc.
 
 
-#### Step 2: Editing Local Database Information
+#### Step 2: Setup Test Files (optional)
 
-First, edit the files `src/controllers/champions.py`, `src/db/seeds.py`, and
- `test/model.py` according to the commented instructions in each file.
+Edit `test/model.py` according to the commented instructions.
 
 #### Step 3: Seed the Database with Champions
 
