@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-/* container components */
-import App from './containers/app';
+/* components */
+import MainPage from './components/mainPage';
 
 
 const routes = (
-  <Route path="/" component={App}>
-    <IndexRoute component={App} />
+  <Route path="/" component={MainPage} >
+    <IndexRoute component={MainPage} />
   </Route>
 );
 

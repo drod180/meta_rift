@@ -6,7 +6,7 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import { createStore, combineReducers } from 'redux';
 import { rootReducers } from './src/reducers/index';
 
-import App from './src/containers/app';
+import MainPage from './src/components/mainPage';
 
 // Add the reducer to your store on the `routing` key
 let store = createStore(
@@ -22,7 +22,7 @@ const history = syncHistoryWithStore(browserHistory, store);
 ReactDOM.render(
   <Provider store={store}>\
     <Router history={history}>
-      <Route path="/" component={App} />
+      <Route path="/" component={MainPage} />
     </Router>
   </Provider>,
   document.getElementById('root')

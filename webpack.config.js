@@ -2,7 +2,7 @@ var path = require("path");
 
 module.exports = {
   context: __dirname,
-  entry: "./frontend/rift.jsx",
+  entry: "./frontend/index.jsx",
   output: {
     path: path.join(__dirname, "public", "javascript"),
     filename: "bundle.js"
@@ -19,7 +19,7 @@ module.exports = {
 				include: path.join(__dirname, 'src'),
 				exclude: /bundle\.js%|webpack\.config\.js$/,
 			}
-		]
+		],
     loaders: [
       {
         test: /\.js|\.jsx$/,
