@@ -23,7 +23,7 @@ export default class MainChamp extends Component {
       <div>
         <Champ
           onClick={this.champClick}
-          imgURI={"../../../docs/images/Fiora_0.jpg"}
+          imgURI={"./images/test_full.jpg"}
           thumb={false}
         />
         <Details

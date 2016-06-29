@@ -23,7 +23,7 @@ export default class TriChamps extends Component {
       <div>
         <Champ
           onClick={this.champClick}
-          imgURI={"../../../docs/images/Fiora_0.jpg"}
+          imgURI={"./images/test_thumb.png"}
           thumb
         />
         <Details
@@ -33,7 +33,7 @@ export default class TriChamps extends Component {
         />
         <Champ
           onClick={this.champClick}
-          imgURI={"../../../docs/images/Fiora_0.jpg"}
+          imgURI={"./images/test_thumb.png"}
           thumb
         />
         <Details
@@ -43,7 +43,7 @@ export default class TriChamps extends Component {
         />
         <Champ
           onClick={this.champClick}
-          imgURI={"../../../docs/images/Fiora_0.jpg"}
+          imgURI={"./images/test_thumb.png"}
           thumb
         />
         <Details

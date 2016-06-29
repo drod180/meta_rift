@@ -73,22 +73,22 @@
 	// Add the reducer to your store on the `routing` key
 	var store = (0, _redux.createStore)((0, _redux.combineReducers)({
 	  rootReducers: _index.rootReducers,
-	  router: _reactRouterRedux.routerReducer
+	  routing: _reactRouterRedux.routerReducer
 	}));
 	
 	// Create an enhanced history that syncs navigation events with the store
 	var history = (0, _reactRouterRedux.syncHistoryWithStore)(_reactRouter.browserHistory, store);
-	
-	_reactDom2.default.render(_react2.default.createElement(
-	  _reactRedux.Provider,
-	  { store: store },
-	  '\\',
-	  _react2.default.createElement(
-	    _reactRouter.Router,
-	    { history: history },
-	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _mainPage2.default })
-	  )
-	), document.getElementById('root'));
+	window.initializeApp = function () {
+	  _reactDom2.default.render(_react2.default.createElement(
+	    _reactRedux.Provider,
+	    { store: store },
+	    _react2.default.createElement(
+	      _reactRouter.Router,
+	      { history: history },
+	      _react2.default.createElement(_reactRouter.Route, { path: '/', component: _mainPage2.default })
+	    )
+	  ), document.getElementById('root'));
+	};
 
 /***/ },
 /* 1 */
@@ -28129,7 +28129,7 @@
 	        null,
 	        _react2.default.createElement(_champ2.default, {
 	          onClick: this.champClick,
-	          imgURI: "../../../docs/images/Fiora_0.jpg",
+	          imgURI: "./images/test_full.jpg",
 	          thumb: false
 	        }),
 	        _react2.default.createElement(_details2.default, {
@@ -28176,7 +28176,7 @@
 	Champ.propTypes = {
 	  onClick: _react.PropTypes.func.isRequired,
 	  imgURI: _react.PropTypes.string.isRequired,
-	  thumb: _react.PropTypes.bool.isRequried
+	  thumb: _react.PropTypes.bool.isRequired
 	};
 	
 	exports.default = Champ;
@@ -28290,7 +28290,7 @@
 	        null,
 	        _react2.default.createElement(_champ2.default, {
 	          onClick: this.champClick,
-	          imgURI: "../../../docs/images/Fiora_0.jpg",
+	          imgURI: "./images/test_thumb.png",
 	          thumb: true
 	        }),
 	        _react2.default.createElement(_details2.default, {
@@ -28300,7 +28300,7 @@
 	        }),
 	        _react2.default.createElement(_champ2.default, {
 	          onClick: this.champClick,
-	          imgURI: "../../../docs/images/Fiora_0.jpg",
+	          imgURI: "./images/test_thumb.png",
 	          thumb: true
 	        }),
 	        _react2.default.createElement(_details2.default, {
@@ -28310,7 +28310,7 @@
 	        }),
 	        _react2.default.createElement(_champ2.default, {
 	          onClick: this.champClick,
-	          imgURI: "../../../docs/images/Fiora_0.jpg",
+	          imgURI: "./images/test_thumb.png",
 	          thumb: true
 	        }),
 	        _react2.default.createElement(_details2.default, {

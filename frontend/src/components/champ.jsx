@@ -9,7 +9,7 @@ const Champ = ({ onClick, imgURI, thumb }) => (
 Champ.propTypes = {
   onClick: PropTypes.func.isRequired,
   imgURI: PropTypes.string.isRequired,
-  thumb: PropTypes.bool.isRequried,
+  thumb: PropTypes.bool.isRequired,
 };
 
 export default Champ;

@@ -12,18 +12,19 @@ import MainPage from './src/components/mainPage';
 let store = createStore(
   combineReducers({
     rootReducers,
-    router: routerReducer,
+    routing: routerReducer,
   })
 );
 
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, store);
-
-ReactDOM.render(
-  <Provider store={store}>\
-    <Router history={history}>
-      <Route path="/" component={MainPage} />
-    </Router>
-  </Provider>,
-  document.getElementById('root')
-);
+window.initializeApp = () => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <Router history={history}>
+        <Route path="/" component={MainPage} />
+      </Router>
+    </Provider>,
+    document.getElementById('root')
+  );
+};
